@@ -17,5 +17,5 @@ public class PostController {
 
         return searchParam;
     }
-    
+
 }
