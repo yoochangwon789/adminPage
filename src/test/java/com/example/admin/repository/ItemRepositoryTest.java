@@ -28,7 +28,7 @@ public class ItemRepositoryTest extends AdminApplicationTests {
     }
 
     @Test
-    public void item() {
+    public void read() {
 
         Long id = 1L;
 

@@ -39,7 +39,7 @@ public class UserRepositoryTest extends AdminApplicationTests {
 
         // read option 에서 id를 가져와 read 하겠다
         // Optional<T> findById(ID id) 반환 값이 Optional 이다 그래서 제네릭 타입으로 User 선언 하고 user 타입의 객체로 반환
-        Optional<User> user = userRepository.findById(7L);
+        Optional<User> user = userRepository.findByAccount("TestUser03");
 
         // user에서 id = 2 값이 있다면 selectUser에 값을 대입해 selectUser을 출력하겠다
         user.ifPresent(selectUser ->{
