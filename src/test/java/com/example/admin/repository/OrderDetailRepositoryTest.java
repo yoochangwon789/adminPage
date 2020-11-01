@@ -19,7 +19,7 @@ public class OrderDetailRepositoryTest extends AdminApplicationTests {
 
         OrderDetail orderDetail = new OrderDetail();
 
-        orderDetail.setOrderAt(LocalDateTime.now());
+        //orderDetail.setOrderAt(LocalDateTime.now());
 
         // 어떤 사람 ?
         //orderDetail.setUserId(7L);

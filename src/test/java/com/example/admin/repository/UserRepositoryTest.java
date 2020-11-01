@@ -3,6 +3,7 @@ package com.example.admin.repository;
 import com.example.admin.AdminApplicationTests;
 import com.example.admin.model.entity.Item;
 import com.example.admin.model.entity.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,35 +22,38 @@ public class UserRepositoryTest extends AdminApplicationTests {
     @Test
     public void create() {
 
+        String account = "Test01";
+        String password = "Test01";
+        String status = "REGISTERED";
+        String email = "Test01@gmail.com";
+        String phoneNumber = "010-1111-2222";
+        LocalDateTime registeredAt = LocalDateTime.now();
+        LocalDateTime createdAt = LocalDateTime.now();
+        String createdBy = "AdminServer";
+
         User user = new User();
 
-        user.setAccount("TestUser03");
-        user.setEmail("TestUser03@gmail.com");
-        user.setPhoneNumber("010-3333-3333");
-        user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy("TestUser03");
+        user.setAccount(account);
+        user.setPassword(password);
+        user.setStatus(status);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setRegisteredAt(registeredAt);
+        user.setCreatedAt(createdAt);
+        user.setCreatedBy(createdBy);
 
         User newUser = userRepository.save(user);
-        System.out.println("newUser : " + newUser);
+
+        Assertions.assertNotNull(newUser);
+
     }
 
     @Test
     @Transactional
     public void read() {
 
-        // read option 에서 id를 가져와 read 하겠다
-        // Optional<T> findById(ID id) 반환 값이 Optional 이다 그래서 제네릭 타입으로 User 선언 하고 user 타입의 객체로 반환
-        Optional<User> user = userRepository.findByAccount("TestUser03");
-
-        // user에서 id = 2 값이 있다면 selectUser에 값을 대입해 selectUser을 출력하겠다
-        user.ifPresent(selectUser ->{
-
-            selectUser.getOrderDetailList().stream().forEach(detail -> {
-                Item item = detail.getItem();
-                System.out.println(item);
-            });
-        });
-
+        User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+        Assertions.assertNotNull(user);
     }
 
     @Test
