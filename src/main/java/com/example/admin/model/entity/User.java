@@ -3,6 +3,7 @@ package com.example.admin.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor // 변수 없느 생성자 기능 lombok
 @Entity // == table 클래스 이름과 데이터베이스 이름이 같으면 Table 어노텐션을 사용안해도 맵핑이 JPA에서 저절로 이루어짐
+@ToString(exclude = {"orderGroupList"})
 public class User {
 
     @Id
@@ -41,4 +43,7 @@ public class User {
 
     private String updatedBy;
 
+    // User 1 : N OrderGroup
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderGroup> orderGroupList;
 }

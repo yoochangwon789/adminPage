@@ -28,10 +28,10 @@ public class OrderDetailRepositoryTest extends AdminApplicationTests {
         orderDetail.setCreatedBy("AdminServer");
 
         // 어떠한 장바구니의 대한 어떤 상품 장바구니 안에는 여러가지 item이 있을 수 있다
-        orderDetail.setOrderGroupId(1L);
+        //orderDetail.setOrderGroupId(1L);
 
         // 어떤 상품 ?
-        orderDetail.setItemId(1L);
+        //orderDetail.setItemId(1L);
 
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
 

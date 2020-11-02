@@ -53,6 +53,28 @@ public class UserRepositoryTest extends AdminApplicationTests {
     public void read() {
 
         User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+
+        user.getOrderGroupList().stream().forEach(orderGroup -> {
+
+            System.out.println("----------------------주문묶음----------------------");
+            System.out.println("총금액 : " + orderGroup.getTotalPrice());
+            System.out.println("수령지 : " +orderGroup.getRevAddress());
+            System.out.println("수령인 : " +orderGroup.getRevName());
+            System.out.println("총수량 : " +orderGroup.getTotalQuantity());
+
+            System.out.println("----------------------주문상세----------------------");
+
+            orderGroup.getOrderDetailList().forEach(orderDetail -> {
+                System.out.println("파트너사 이름 : " + orderDetail.getItem().getPartner().getName());
+                System.out.println("파트너사 카테고리 : " + orderDetail.getItem().getPartner().getCategory().getTitle());
+                System.out.println("주문 상품 : " + orderDetail.getItem().getName());
+                System.out.println("고객센터 번호 : " + orderDetail.getItem().getPartner().getCallCenter());
+                System.out.println("주문의 상태 : " + orderDetail.getStatus());
+                System.out.println("도착예정일자 : " + orderDetail.getArrivalDate());
+
+            });
+        });
+
         Assertions.assertNotNull(user);
     }
 
@@ -82,7 +104,7 @@ public class UserRepositoryTest extends AdminApplicationTests {
         Optional<User> user = userRepository.findById(3L);
 
         // 데이터 2번을 select 했을 때 반드시 데이터가 존재해야 하기 때문에
-        // assert 라는 junit 패키지 아래 반드시 user은 isPresent 메소드가 반드시 True여야 한다 이과정으 통과해야함
+        // assert 라는 junit 패키지 아래 반드시 user은 isPresent 메소드가 반드시 True여야 한다 이과정을 통과해야함
         // 만약에 데이터가 없다면 assertTrue 값이 false가 되기 때문에 에러가 나게 된다
         assertTrue(user.isPresent());
 
