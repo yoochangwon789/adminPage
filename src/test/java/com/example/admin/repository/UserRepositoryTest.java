@@ -1,7 +1,6 @@
 package com.example.admin.repository;
 
 import com.example.admin.AdminApplicationTests;
-import com.example.admin.model.entity.Item;
 import com.example.admin.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserRepositoryTest extends AdminApplicationTests {
 

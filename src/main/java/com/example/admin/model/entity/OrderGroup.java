@@ -33,7 +33,7 @@ public class OrderGroup {
 
     private BigDecimal totalPrice;
 
-    private Integer quantity;
+    private Integer totalQuantity;
 
     private LocalDateTime orderAt;
 
@@ -46,4 +46,6 @@ public class OrderGroup {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
+
+    private Long userId;
 }

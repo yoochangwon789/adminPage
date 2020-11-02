@@ -5,6 +5,7 @@ import com.example.admin.model.entity.OrderDetail;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,13 +20,18 @@ public class OrderDetailRepositoryTest extends AdminApplicationTests {
 
         OrderDetail orderDetail = new OrderDetail();
 
-        //orderDetail.setOrderAt(LocalDateTime.now());
+        orderDetail.setStatus("WAITING");
+        orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2));
+        orderDetail.setQuantity(1);
+        orderDetail.setTotalPrice(BigDecimal.valueOf(900000));
+        orderDetail.setCreatedAt(LocalDateTime.now());
+        orderDetail.setCreatedBy("AdminServer");
 
-        // 어떤 사람 ?
-        //orderDetail.setUserId(7L);
+        // 어떠한 장바구니의 대한 어떤 상품 장바구니 안에는 여러가지 item이 있을 수 있다
+        orderDetail.setOrderGroupId(1L);
 
         // 어떤 상품 ?
-        //orderDetail.setItemId(1L);
+        orderDetail.setItemId(1L);
 
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
 
