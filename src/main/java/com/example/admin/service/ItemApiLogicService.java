@@ -61,7 +61,23 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 
         Optional<Item> optionalItem = itemRepository.findById(itemApiRequest.getId());
 
-        return null;
+        return optionalItem
+                .map(entityItem -> {
+                    entityItem
+                            .setStatus(itemApiRequest.getStatus())
+                            .setName(itemApiRequest.getName())
+                            .setTitle(itemApiRequest.getTitle())
+                            .setContent(itemApiRequest.getContent())
+                            .setPrice(itemApiRequest.getPrice())
+                            .setBrandName(itemApiRequest.getBrandName())
+                            .setRegisteredAt(itemApiRequest.getRegisteredAt())
+                            .setUnregisteredAt(itemApiRequest.getUnregisteredAt());
+
+                    return entityItem;
+                })
+                .map(newEntityItem -> itemRepository.save(newEntityItem))
+                .map(item -> response(item))
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
     @Override
