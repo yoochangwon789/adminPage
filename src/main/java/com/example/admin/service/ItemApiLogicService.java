@@ -82,7 +82,15 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 
     @Override
     public Header delete(Long id) {
-        return null;
+
+        Optional<Item> optionalItem = itemRepository.findById(id);
+
+        return optionalItem
+                .map(item -> {
+                    itemRepository.delete(item);
+                    return Header.OK();
+                })
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
     private Header<ItemApiResponse> response(Item item) {
