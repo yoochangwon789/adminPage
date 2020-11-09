@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiRequest, OrderGroupApiResponse> {
@@ -54,9 +55,28 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
     @Override
     public Header<OrderGroupApiResponse> update(Header<OrderGroupApiRequest> request) {
 
+        OrderGroupApiRequest body = request.getData();
 
+        Optional<OrderGroup> optionalOrderGroup = orderGroupRepository.findById(body.getId());
 
-        return null;
+        return optionalOrderGroup
+                .map(entityOrderGroup -> {
+                    entityOrderGroup
+                    .setStatus(body.getStatus())
+                    .setOrderType(body.getOrderType())
+                    .setRevAddress(body.getRevAddress())
+                    .setRevName(body.getRevName())
+                    .setPaymentType(body.getPaymentType())
+                    .setTotalPrice(body.getTotalPrice())
+                    .setTotalQuantity(body.getTotalQuantity())
+                    .setOrderAt(body.getOrderAt())
+                    .setUser(userRepository.getOne(body.getUserId()));
+
+            return entityOrderGroup;
+        })
+                .map(updateOrderGroup -> orderGroupRepository.save(updateOrderGroup))
+                .map(orderGroup -> response(orderGroup))
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
     @Override
