@@ -10,35 +10,32 @@ import com.example.admin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiRequest, OrderGroupApiResponse> {
 
     @Autowired
-    private UserRepository userRepository;
+    private OrderGroupRepository orderGroupRepository;
 
     @Autowired
-    private OrderGroupRepository orderGroupRepository;
+    private UserRepository userRepository;
 
     @Override
     public Header<OrderGroupApiResponse> create(Header<OrderGroupApiRequest> request) {
 
-        OrderGroupApiRequest orderGroupApiRequest = request.getData();
+        OrderGroupApiRequest body = request.getData();
 
         OrderGroup orderGroup = OrderGroup.builder()
-                .status("COMPLETE")
-                .orderType("ALL")
-                .revAddress("인천시 계양구")
-                .revName("유창원")
-                .paymentType("CARD")
-                .totalPrice(BigDecimal.valueOf(100000))
-                .totalQuantity(3)
-                .orderAt(LocalDateTime.now().minusDays(2))
-                .arrivalDate(LocalDateTime.now())
-                .user(userRepository.getOne(orderGroupApiRequest.getUserId()))
+                .status(body.getStatus())
+                .orderType(body.getOrderType())
+                .revAddress(body.getRevAddress())
+                .revName(body.getRevName())
+                .paymentType(body.getPaymentType())
+                .totalPrice(body.getTotalPrice())
+                .totalQuantity(body.getTotalQuantity())
+                .orderAt(LocalDateTime.now())
+                .user(userRepository.getOne(body.getUserId()))
                 .build();
 
         OrderGroup newOrderGroup = orderGroupRepository.save(orderGroup);
@@ -49,15 +46,16 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
     @Override
     public Header<OrderGroupApiResponse> read(Long id) {
 
-        Optional<OrderGroup> orderGroup = orderGroupRepository.findById(id);
-
-        return orderGroup
-                .map(orderGroupSelect -> response(orderGroupSelect))
+        return orderGroupRepository.findById(id)
+                .map(orderGroup -> response(orderGroup))
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
     @Override
     public Header<OrderGroupApiResponse> update(Header<OrderGroupApiRequest> request) {
+
+
+
         return null;
     }
 
@@ -68,7 +66,8 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 
     private Header<OrderGroupApiResponse> response(OrderGroup orderGroup) {
 
-        OrderGroupApiResponse orderGroupApiResponse = OrderGroupApiResponse.builder()
+        OrderGroupApiResponse body = OrderGroupApiResponse.builder()
+                .id(orderGroup.getId())
                 .status(orderGroup.getStatus())
                 .orderType(orderGroup.getOrderType())
                 .revAddress(orderGroup.getRevAddress())
@@ -81,6 +80,6 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
                 .userId(orderGroup.getUser().getId())
                 .build();
 
-        return Header.OK(orderGroupApiResponse);
+        return Header.OK(body);
     }
 }
