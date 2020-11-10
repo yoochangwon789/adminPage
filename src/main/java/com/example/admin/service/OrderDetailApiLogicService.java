@@ -4,7 +4,6 @@ import com.example.admin.ifs.CrudInterface;
 import com.example.admin.model.entity.OrderDetail;
 import com.example.admin.model.network.Header;
 import com.example.admin.model.network.request.OrderDetailApiRequest;
-import com.example.admin.model.network.request.OrderGroupApiRequest;
 import com.example.admin.model.network.response.OrderDetailApiResponse;
 import com.example.admin.repository.ItemRepository;
 import com.example.admin.repository.OrderDetailRepository;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiRequest, OrderDetailApiResponse> {
@@ -55,7 +55,26 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 
     @Override
     public Header<OrderDetailApiResponse> update(Header<OrderDetailApiRequest> request) {
-        return null;
+
+        OrderDetailApiRequest body = request.getData();
+
+        Optional<OrderDetail> optionalOrderDetail = orderDetailRepository.findById(body.getId());
+
+        return optionalOrderDetail
+                .map(orderDetail -> {
+                    orderDetail
+                            .setStatus(body.getStatus())
+                            .setArrivalDate(body.getArrivalDate())
+                            .setQuantity(body.getQuantity())
+                            .setTotalPrice(body.getTotalPrice())
+                            .setItem(itemRepository.getOne(body.getItemId()))
+                            .setOrderGroup(orderGroupRepository.getOne(body.getOrderGroupId()));
+
+                    return orderDetail;
+                })
+                .map(newOrderDetail -> orderDetailRepository.save(newOrderDetail))
+                .map(orderDetail -> response(orderDetail))
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
     @Override

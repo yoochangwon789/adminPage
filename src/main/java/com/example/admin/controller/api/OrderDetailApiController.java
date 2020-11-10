@@ -28,8 +28,9 @@ public class OrderDetailApiController implements CrudInterface<OrderDetailApiReq
     }
 
     @Override
-    public Header<OrderDetailApiResponse> update(Header<OrderDetailApiRequest> request) {
-        return null;
+    @PutMapping("")
+    public Header<OrderDetailApiResponse> update(@RequestBody Header<OrderDetailApiRequest> request) {
+        return orderDetailApiLogicService.update(request);
     }
 
     @Override
