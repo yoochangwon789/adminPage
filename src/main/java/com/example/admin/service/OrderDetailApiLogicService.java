@@ -79,7 +79,13 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 
     @Override
     public Header delete(Long id) {
-        return null;
+
+        return orderDetailRepository.findById(id)
+                .map(orderDetail -> {
+                    orderDetailRepository.delete(orderDetail);
+                    return Header.OK();
+                })
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
     private Header<OrderDetailApiResponse> response(OrderDetail orderDetail) {
