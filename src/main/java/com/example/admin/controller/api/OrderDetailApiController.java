@@ -4,22 +4,27 @@ import com.example.admin.ifs.CrudInterface;
 import com.example.admin.model.network.Header;
 import com.example.admin.model.network.request.OrderDetailApiRequest;
 import com.example.admin.model.network.response.OrderDetailApiResponse;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.admin.service.OrderDetailApiLogicService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/orderDetail")
 public class OrderDetailApiController implements CrudInterface<OrderDetailApiRequest, OrderDetailApiResponse> {
 
+    @Autowired
+    private OrderDetailApiLogicService orderDetailApiLogicService;
 
     @Override
-    public Header<OrderDetailApiResponse> create(Header<OrderDetailApiRequest> request) {
-        return null;
+    @PostMapping("")
+    public Header<OrderDetailApiResponse> create(@RequestBody Header<OrderDetailApiRequest> request) {
+        return orderDetailApiLogicService.create(request);
     }
 
     @Override
-    public Header<OrderDetailApiResponse> read(Long id) {
-        return null;
+    @GetMapping("{id}")
+    public Header<OrderDetailApiResponse> read(@PathVariable Long id) {
+        return orderDetailApiLogicService.read(id);
     }
 
     @Override

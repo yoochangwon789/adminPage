@@ -42,12 +42,15 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
 
-        return null;
+        return response(newOrderDetail);
     }
 
     @Override
     public Header<OrderDetailApiResponse> read(Long id) {
-        return null;
+
+        return orderDetailRepository.findById(id)
+                .map(orderDetail -> response(orderDetail))
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
     @Override
@@ -61,6 +64,17 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
     }
 
     private Header<OrderDetailApiResponse> response(OrderDetail orderDetail) {
-        return null;
+
+        OrderDetailApiResponse body = OrderDetailApiResponse.builder()
+                .id(orderDetail.getId())
+                .status(orderDetail.getStatus())
+                .arrivalDate(orderDetail.getArrivalDate())
+                .quantity(orderDetail.getQuantity())
+                .totalPrice(orderDetail.getTotalPrice())
+                .itemId(orderDetail.getItem().getId())
+                .orderGroupId(orderDetail.getOrderGroup().getId())
+                .build();
+
+        return Header.OK(body);
     }
 }
