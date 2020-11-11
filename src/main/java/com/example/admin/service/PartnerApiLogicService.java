@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, PartnerApiResponse> {
@@ -54,7 +55,30 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 
     @Override
     public Header<PartnerApiResponse> update(Header<PartnerApiRequest> request) {
-        return null;
+
+        PartnerApiRequest body = request.getData();
+
+        Optional<Partner> optionalPartner = partnerRepository.findById(body.getId());
+
+        return optionalPartner
+                .map(entityPartner -> {
+                    entityPartner
+                            .setName(body.getName())
+                            .setStatus(body.getStatus())
+                            .setAddress(body.getAddress())
+                            .setCallCenter(body.getCallCenter())
+                            .setPartnerNumber(body.getPartnerNumber())
+                            .setBusinessNumber(body.getBusinessNumber())
+                            .setCeoName(body.getCeoName())
+                            .setRegisteredAt(LocalDateTime.now())
+                            .setUnregisteredAt(LocalDateTime.now())
+                            .setCategory(categoryRepository.getOne(body.getCategoryId()));
+
+                    return entityPartner;
+                })
+                .map(newPartner -> partnerRepository.save(newPartner))
+                .map(partner -> response(partner))
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
     @Override
