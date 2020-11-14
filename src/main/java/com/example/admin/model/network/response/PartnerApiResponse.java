@@ -1,5 +1,6 @@
 package com.example.admin.model.network.response;
 
+import com.example.admin.model.enumclass.ItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +16,9 @@ public class PartnerApiResponse {
 
     private Long id;
 
-    private String name;
+    private ItemStatus status;
 
-    private String status;
+    private String name;
 
     private String address;
 
