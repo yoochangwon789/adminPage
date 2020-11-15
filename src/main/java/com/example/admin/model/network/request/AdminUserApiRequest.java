@@ -1,6 +1,6 @@
 package com.example.admin.model.network.request;
 
-import com.example.admin.ifs.CrudInterface;
+import com.example.admin.model.enumclass.AdminUserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class AdminUserApiRequest {
 
     private String password;
 
-    private String status;
+    private AdminUserStatus status;
 
     private String role;
 
