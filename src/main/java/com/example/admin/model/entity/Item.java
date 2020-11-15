@@ -29,7 +29,7 @@ public class Item {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private ItemStatus status;  // 등록 / 해지 / 검수중(등록 대기중)
+    private ItemStatus status;
 
     private String name;
 

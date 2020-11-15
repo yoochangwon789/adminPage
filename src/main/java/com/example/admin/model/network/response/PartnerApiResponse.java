@@ -16,7 +16,7 @@ public class PartnerApiResponse {
 
     private Long id;
 
-    private ItemStatus status;
+    private String status;
 
     private String name;
 

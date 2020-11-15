@@ -95,9 +95,12 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 
     private Header<ItemApiResponse> response(Item item) {
 
+        // Enum class 를 통해서 값을 내려주는 또다른 방법
+        // String statusTitle = item.getStatus().getTitle();
+
         ItemApiResponse itemApiResponse = ItemApiResponse.builder()
                 .id(item.getId())
-                //.status(item.getStatus())
+                .status(item.getStatus())
                 .name(item.getName())
                 .title(item.getTitle())
                 .content(item.getContent())
