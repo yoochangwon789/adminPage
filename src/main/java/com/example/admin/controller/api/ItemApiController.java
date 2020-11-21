@@ -22,4 +22,6 @@ public class ItemApiController extends CrudController<ItemApiRequest, ItemApiRes
     //public void init() {
         //this.baseService = itemApiLogicService;
     //}
+
+    // BaseService 관한 추상화 클래스로 인하여 위에 로직 서비스나 baseService에 관한 명시적 값 대입은 필요없게 된다.
 }
