@@ -2,6 +2,7 @@ package com.example.admin.repository;
 
 import com.example.admin.AdminApplicationTests;
 import com.example.admin.model.entity.OrderDetail;
+import com.example.admin.model.enumclass.OrderDetailStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +21,7 @@ public class OrderDetailRepositoryTest extends AdminApplicationTests {
 
         OrderDetail orderDetail = new OrderDetail();
 
-        orderDetail.setStatus("WAITING");
+        orderDetail.setStatus(OrderDetailStatus.REGISTERED);
         orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2));
         orderDetail.setQuantity(1);
         orderDetail.setTotalPrice(BigDecimal.valueOf(900000));
