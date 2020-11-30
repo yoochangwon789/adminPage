@@ -3,6 +3,7 @@ package com.example.admin.service;
 import com.example.admin.model.entity.User;
 import com.example.admin.model.enumclass.UserStatus;
 import com.example.admin.model.network.Header;
+import com.example.admin.model.network.Pagination;
 import com.example.admin.model.network.request.UserApiRequest;
 import com.example.admin.model.network.response.UserApiResponse;
 import org.springframework.data.domain.Page;
@@ -126,6 +127,13 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                 .map(user -> response(user))
                 .collect(Collectors.toList());
 
-        return Header.OK(userApiResponseList);
+        Pagination pagination = Pagination.builder()
+                .totalPages(users.getTotalPages())
+                .totalElements(users.getTotalElements())
+                .currentPage(users.getNumber())
+                .currentElements(users.getNumberOfElements())
+                .build();
+
+        return Header.OK(userApiResponseList, pagination);
     }
 }
