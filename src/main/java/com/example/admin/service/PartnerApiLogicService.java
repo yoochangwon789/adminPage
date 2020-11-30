@@ -6,9 +6,11 @@ import com.example.admin.model.network.request.PartnerApiRequest;
 import com.example.admin.model.network.response.PartnerApiResponse;
 import com.example.admin.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +18,11 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest, Partn
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Override
+    public Header<List<PartnerApiResponse>> search(Pageable pageable) {
+        return null;
+    }
 
     @Override
     public Header<PartnerApiResponse> create(Header<PartnerApiRequest> request) {

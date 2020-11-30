@@ -7,9 +7,11 @@ import com.example.admin.model.network.response.OrderDetailApiResponse;
 import com.example.admin.repository.ItemRepository;
 import com.example.admin.repository.OrderGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,11 @@ public class OrderDetailApiLogicService extends BaseService<OrderDetailApiReques
 
     @Autowired
     private OrderGroupRepository orderGroupRepository;
+
+    @Override
+    public Header<List<OrderDetailApiResponse>> search(Pageable pageable) {
+        return null;
+    }
 
     @Override
     public Header<OrderDetailApiResponse> create(Header<OrderDetailApiRequest> request) {

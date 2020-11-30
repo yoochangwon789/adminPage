@@ -4,13 +4,20 @@ import com.example.admin.model.entity.AdminUser;
 import com.example.admin.model.network.Header;
 import com.example.admin.model.network.request.AdminUserApiRequest;
 import com.example.admin.model.network.response.AdminUserApiResponse;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AdminUserApiLogicService extends BaseService<AdminUserApiRequest, AdminUserApiResponse, AdminUser> {
+
+    @Override
+    public Header<List<AdminUserApiResponse>> search(Pageable pageable) {
+        return null;
+    }
 
     @Override
     public Header<AdminUserApiResponse> create(Header<AdminUserApiRequest> request) {
