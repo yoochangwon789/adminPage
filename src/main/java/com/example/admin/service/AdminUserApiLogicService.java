@@ -20,6 +20,11 @@ public class AdminUserApiLogicService extends BaseService<AdminUserApiRequest, A
     }
 
     @Override
+    public Header<AdminUserApiResponse> orderInfo(Long id) {
+        return null;
+    }
+
+    @Override
     public Header<AdminUserApiResponse> create(Header<AdminUserApiRequest> request) {
 
         AdminUserApiRequest body = request.getData();

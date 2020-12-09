@@ -9,6 +9,8 @@ public interface CrudInterface<Req, Res> {
 
     Header<List<Res>> search(Pageable pageable);
 
+    Header<Res> orderInfo(Long id);
+
     Header<Res> create(Header<Req> request);
 
     Header<Res> read(Long id);

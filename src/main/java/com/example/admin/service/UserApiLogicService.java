@@ -1,11 +1,18 @@
 package com.example.admin.service;
 
+import com.example.admin.model.entity.Item;
+import com.example.admin.model.entity.OrderGroup;
 import com.example.admin.model.entity.User;
 import com.example.admin.model.enumclass.UserStatus;
 import com.example.admin.model.network.Header;
 import com.example.admin.model.network.Pagination;
 import com.example.admin.model.network.request.UserApiRequest;
+import com.example.admin.model.network.response.ItemApiResponse;
+import com.example.admin.model.network.response.OrderGroupApiResponse;
 import com.example.admin.model.network.response.UserApiResponse;
+import com.example.admin.model.network.response.UserOrderInfoApiResponse;
+import com.example.admin.repository.OrderGroupRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +28,12 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
     // 1. request data
     // 2. user 생성
     // 3. 생성된 데이터 -> UserApiResponse return
+
+    @Autowired
+    private OrderGroupApiLogicService orderGroupApiLogicService;
+
+    @Autowired
+    private ItemApiLogicService itemApiLogicService;
 
     @Override
     public Header<UserApiResponse> create(Header<UserApiRequest> request) {
@@ -135,5 +148,40 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
                 .build();
 
         return Header.OK(userApiResponseList, pagination);
+    }
+
+    @Override
+    public Header<UserApiResponse> orderInfo(Long id) {
+
+        // user
+        User user = baseRepository.getOne(id);
+        UserApiResponse userApiResponse = response(user);
+
+
+        // orderGroup
+        List<OrderGroup> orderGroupList = user.getOrderGroupList();
+        List<OrderGroupApiResponse> orderGroupApiResponseList = orderGroupList.stream()
+                .map(orderGroup -> {
+                    OrderGroupApiResponse orderGroupApiResponse = orderGroupApiLogicService.response(orderGroup).getData();
+
+                    // item api response
+                    List<ItemApiResponse> itemApiResponseList = orderGroup.getOrderDetailList().stream()
+                            .map(detail -> detail.getItem())
+                            .map(item -> itemApiLogicService.response(item).getData())
+                            .collect(Collectors.toList());
+
+                    orderGroupApiResponse.setItemApiResponseList(itemApiResponseList);
+                    return orderGroupApiResponse;
+
+                })
+                .collect(Collectors.toList());
+
+        userApiResponse.setOrderGroupApiResponseList(orderGroupApiResponseList);
+
+        UserOrderInfoApiResponse userOrderInfoApiResponse = UserOrderInfoApiResponse.builder()
+                .userApiResponse(userApiResponse)
+                .build();
+
+        return null;
     }
 }

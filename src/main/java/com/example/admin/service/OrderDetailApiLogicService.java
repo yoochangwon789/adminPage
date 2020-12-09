@@ -29,6 +29,11 @@ public class OrderDetailApiLogicService extends BaseService<OrderDetailApiReques
     }
 
     @Override
+    public Header<OrderDetailApiResponse> orderInfo(Long id) {
+        return null;
+    }
+
+    @Override
     public Header<OrderDetailApiResponse> create(Header<OrderDetailApiRequest> request) {
 
         OrderDetailApiRequest body = request.getData();

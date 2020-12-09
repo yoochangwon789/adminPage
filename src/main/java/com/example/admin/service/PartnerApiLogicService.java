@@ -25,6 +25,11 @@ public class PartnerApiLogicService extends BaseService<PartnerApiRequest, Partn
     }
 
     @Override
+    public Header<PartnerApiResponse> orderInfo(Long id) {
+        return null;
+    }
+
+    @Override
     public Header<PartnerApiResponse> create(Header<PartnerApiRequest> request) {
 
         PartnerApiRequest body = request.getData();

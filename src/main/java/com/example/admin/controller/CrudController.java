@@ -28,6 +28,12 @@ public abstract class CrudController<Req, Res, Entity> implements CrudInterface<
     }
 
     @Override
+    @GetMapping("/{id}/orderInfo")
+    public Header<Res> orderInfo(Long id) {
+        return baseService.orderInfo(id);
+    }
+
+    @Override
     @PostMapping("")
     public Header<Res> create(@RequestBody Header<Req> request) {
         return baseService.create(request);

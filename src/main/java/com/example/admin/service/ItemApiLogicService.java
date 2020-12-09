@@ -25,6 +25,11 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
     }
 
     @Override
+    public Header<ItemApiResponse> orderInfo(Long id) {
+        return null;
+    }
+
+    @Override
     public Header<ItemApiResponse> create(Header<ItemApiRequest> request) {
 
         ItemApiRequest itemApiRequest = request.getData();
@@ -95,7 +100,7 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
-    private Header<ItemApiResponse> response(Item item) {
+    public Header<ItemApiResponse> response(Item item) {
 
         // Enum class 를 통해서 값을 내려주는 또다른 방법
         // String statusTitle = item.getStatus().getTitle();

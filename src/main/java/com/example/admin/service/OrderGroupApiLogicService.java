@@ -25,6 +25,11 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
     }
 
     @Override
+    public Header<OrderGroupApiResponse> orderInfo(Long id) {
+        return null;
+    }
+
+    @Override
     public Header<OrderGroupApiResponse> create(Header<OrderGroupApiRequest> request) {
 
         OrderGroupApiRequest body = request.getData();
@@ -94,7 +99,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
-    private Header<OrderGroupApiResponse> response(OrderGroup orderGroup) {
+    public Header<OrderGroupApiResponse> response(OrderGroup orderGroup) {
 
         OrderGroupApiResponse body = OrderGroupApiResponse.builder()
                 .id(orderGroup.getId())

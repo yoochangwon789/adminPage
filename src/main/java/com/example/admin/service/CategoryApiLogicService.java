@@ -20,6 +20,11 @@ public class CategoryApiLogicService extends BaseService<CategoryApiRequest, Cat
     }
 
     @Override
+    public Header<CategoryApiResponse> orderInfo(Long id) {
+        return null;
+    }
+
+    @Override
     public Header<CategoryApiResponse> create(Header<CategoryApiRequest> request) {
 
         CategoryApiRequest body = request.getData();
